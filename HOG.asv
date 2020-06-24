@@ -1,7 +1,7 @@
 function HOG( binCount, cellSize)
     switch nargin
         case 0
-            binCount = 9;
+            binCount = 255;
             cellSize = 1;
         case 1
             cellSize = 1;
@@ -12,7 +12,7 @@ function HOG( binCount, cellSize)
     class1HOGs = zeros(class1Size, binCount * cellSize ^ 2);
     for i = 1:class1Size
         input = rgb2gray(imread([class1(i).folder, '\', class1(i).name]));
-        class1HOGs(i,:) = extractHOGFeatures(input, 'CellSize', size(input) / cellSize,'BlockSize', [cellSize cellSize], 'NumBins', binCount);
+        class1HOGs(i,:) = extractHOGFeatures(input, 'CellSize', [3 3], 'BlockSize', [cellSize cellSize], 'NumBins', binCount);
         disp(['i: ', num2str(i)]);    
     end
     % %     read Class2 Training images.
