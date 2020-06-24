@@ -2,9 +2,9 @@ function HOG( binCount, cellSize)
     switch nargin
         case 0
             binCount = 9;
-            cellSize = 1;
+            cellSize = 4;
         case 1
-            cellSize = 1;
+            cellSize = 4;
     end
     % %     read Class1 Training images.
     class1 = dir('Class1 Training images\\*.jpg');
