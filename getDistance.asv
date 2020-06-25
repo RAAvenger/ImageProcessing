@@ -23,16 +23,11 @@ svmLBP = SVMTrainClassifierForLBP(LBPs);
 %% get test pics
 testImages = dir('test\\*.jpg');
 testImagesSize = numel(testImages);
-class = zeros(testImagesSize, 4);
 for i=1:testImagesSize
     input = rgb2gray(imread([testImages(i).folder, '\', testImages(i).name]));
     %% get HOG and LBP Features
     HOG = extractHOGFeatures(input, 'CellSize', size(input) / cellSize,'BlockSize', [cellSize cellSize], 'NumBins', binCount);
     LBP = extractLBPFeatures(input);
     %% classify images
-    class(i,1) = knnHOG.predictFcn(HOG);
-    class(i,2) = svmHOG.predictFcn(HOG);
-    class(i,3) = knnLBP.predictFcn(LBP);
-    class(i,4) = svmLBP.predictFcn(LBP);
 end
 clearvars binCount cellSize i input testImages testImagesSize
