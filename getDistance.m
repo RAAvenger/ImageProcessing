@@ -25,6 +25,41 @@ knnLBP = KNNTrainClassifierForLBP(LBPs);
 svmLBP = SVMTrainClassifierForLBP(LBPs);
 % go back to main directory
 cd ..
+%% calculate Precision
+FalseNegative = zeros(1,4);
+FalsePositive = zeros(1,4);
+% using functions on class1 to find FalseNegatives 
+for i = 1:c1s
+    if knnHOG.predictFcn(class1HOGs(i,:)) == 2
+        FalseNegative(1) = FalseNegative(1) + 1;
+    end
+    if svmHOG.predictFcn(class1HOGs(i,:)) == 2
+        FalseNegative(2) = FalseNegative(2) + 1;
+    end
+    if knnLBP.predictFcn(class1LBPs(i,:)) == 2
+        FalseNegative(3) = FalseNegative(3) + 1;
+    end
+    if svmLBP.predictFcn(class1LBPs(i,:)) == 2
+        FalseNegative(4) = FalseNegative(4) + 1;
+    end
+end
+% using functions on class2 to find FalsePositive 
+for i = 1:c2s
+    if knnHOG.predictFcn(class2HOGs(i,:)) == 1
+        FalsePositive(1) = FalsePositive(1) + 1;
+    end
+    if svmHOG.predictFcn(class2HOGs(i,:)) == 1
+        FalsePositive(2) = FalsePositive(2) + 1;
+    end
+    if knnLBP.predictFcn(class2LBPs(i,:)) == 1
+        FalsePositive(3) = FalsePositive(3) + 1;
+    end
+    if svmLBP.predictFcn(class2LBPs(i,:)) == 1
+        FalsePositive(4) = FalsePositive(4) + 1;
+    end
+end
+FNR = FalseNegative / (c1s + c2s);
+FPR = FalsePositive / (c1s + c2s);
 %% get test pics
 testImages = dir('test\\*.jpg');
 testImagesSize = numel(testImages);

@@ -1,5 +1,13 @@
 getDistance
 load('data\\ClassificationResults.mat');
+%% showing Precision
+disp('False Negative Rates for functions: ')
+disp(FNR)
+disp('False Positive Rates for functions: ')
+disp(FPR)
+precision = 1 - FNR + FPR;
+disp('Precision of functions: ')
+disp(precision)
 %% get test pics
 testImages = dir('test\\*.jpg');
 testImagesSize = numel(testImages);
@@ -18,3 +26,4 @@ for i=2:testImagesSize + 1
     figure,imshow(input);
     title(t)
 end
+clearvars c1 c2 i input j t testImages testImagesSize
